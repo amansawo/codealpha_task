@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> FashionFlick</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background-color:#ddd;
+        color: #333;
+    }
+
+    header {
+        background-color: #333;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+    }
+
+    header nav a {
+        color: #fff;
+        text-decoration: none;
+        margin:  70px;
+        font-weight: bold;
+        margin-top: 50%;
+        padding: 50px;
+    }
+
+    header nav a:hover {
+        text-decoration: underline;
+    }
+
+    .product-list {
+        display:flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        margin: 10px;
+        margin-right: 20%;
+    }
+
+    .product-item {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        padding: 40px;
+        width: 300px;
+        margin: 10px;
+        text-align: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-item img {
+        width: 80%;
+        height: auto;
+        max-width: 250px;
+        padding: 10px;
+    }
+
+    .product-item h3 {
+        margin: 10px 0;
+    }
+
+    .product-item button {
+        background-color: #333;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    .product-item button:hover {
+        background-color: #555;
+    }
+
+    #cart {
+        background-color: #fff;
+        padding: 20px;
+        margin: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        right: 1%;
+        top: 60px;
+        width: 250px;
+        border-radius: 5px;
+    }
+
+    #cart h3 {
+        margin-bottom: 20px;
+    }
+
+    #cart-items {
+        list-style: none;
+        margin-bottom: 20px;
+    }
+
+    #total {
+        font-weight: bold;
+        font-size: 1.2em;
+    }
+
+    footer {
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        padding: 20px;
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+    }
+
+    .about-us, .contact-us {
+        padding: 20px;
+        margin: 20px;
+    }
+
+    .about-us h2, .contact-us h2 {
+        margin-bottom: 10px;
+    }
+
+    .contact-us p {
+        font-size: 1.1em;
+    }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <h1>FashionFlick</h1>
+        </div>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Shop</a>
+            <a href="#about-us">About Us</a>
+            <a href="#contact-us">Contact</a>
+        </nav>
+    </header>
+
+    <section class="product-list">
+        <div class="product-item">
+            <img src="https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcS4UeKpioL0ET_e0QWWpZufcFnIXMH-LSpXxIa49z4BztaBId9t4fZb_6ovzwpysWH4umJKwReLaL_kM8jhnMXWozw3Aj4hReK3933n6Bhs2WI8OPAVvJu1Cw" alt="t-shirt">
+            <h3> Oversized t-shirt</h3>
+            <p>   Elevate your style with our oversized cotton T-shirt, crafted from high-quality cotton in a chic black hue. Designed for ultimate comfort and style, this T-shirt boasts a witty and inspiring quote that's bound to catch attention wherever you go. Whether you're hitting the gym or heading out for a casual day, this T-shirt's trendy and relaxed fit will keep you looking effortlessly cool and feeling comfortable all day long.</p>
+            <input type="radio" id="small" name="shirt_size" value="small"><label for="small">Small</label>
+            <input type="radio" id="medium" name="shirt_size" value="medium"><label for="medium"> Medium</label>
+            <input type="radio" id="large" name="shirt_size" value="large"><label for="large">Large</label>
+            <p> <strong>$8.99</strong></p>
+            <button onclick="addToCart('oversized tshirt', 8.99)">Add to Cart</button>
+        </div>
+        <div class="product-item">
+            <img src="https://veirdo.in/cdn/shop/files/18_5.jpg?v=1723283778" alt="Oversized Tees">
+            <h3>Oversized Tees</h3>
+            <p>Oversized T-shirts are stylish and attractive. Give a Unique Collection to your wardrobe casuals.</p>
+            <input type="radio" id="small" name="shirt_size" value="small"><label for="small">Small</label>
+            <input type="radio" id="medium" name="shirt_size" value="medium"><label for="medium">Medium</label>
+            <input type="radio" id="large" name="shirt_size" value="large"><label for="large">Large</label>
+            <button onclick="addToCart('Oversized Tees', 12.99)">Add to Cart</button>
+        </div>
+        <div class="product-item">
+            <img src="https://5.imimg.com/data5/SELLER/Default/2023/1/BX/DY/VC/7633002/men-oversized-tshirts.jpg"alt="Men's Polo Neck Regular Fit Gym Sports Zipper T-Shirt">
+            <h3>Men's Polo Neck Regular Fit Gym Sports Zipper T-Shirt</h3>
+            <p> A Mens Gym Polo T-shirt is a stylish piece of activewear, perfect for workouts, sports, or everyday wear. A Polo T-shirt made from 100% Polyester fabric with a Zip for breathable, lightweight keeping you dry and comfortable.</p>
+             <input type="radio" id="small" name="shirt_size" value="small"><label for="small">Small</label>
+            <input type="radio" id="medium" name="shirt_size" value="medium"><label for="medium"> Medium</label>
+            <input type="radio" id="large" name="shirt_size" value="large"><label for="large">Large</label>
+            <p><strong>$19.99</strong></p>
+            
+            <button onclick="addToCart('Mens Polo Neck Regular Fit Gym Sports Zipper T-Shirt', 19.99)">Add to Cart</button>
+        </div>
+      
+    </section>
+
+    
+    <section class="about-us" id="about-us">
+        <h2>About Us</h2>
+        <p>FashionFlick is a leading online fashion retailer, offering a wide range of trendy, comfortable, and high-quality clothing for men and women. We believe fashion should be affordable, stylish, and versatile. From casual streetwear to smart casuals, we have something for everyone. Our mission is to bring the latest fashion trends straight to your wardrobe at unbeatable prices. Stay stylish with FashionFlick.</p>
+    </section>
+
+   
+    <section class="contact-us" id="contact-us">
+        <h2>Contact Us</h2>
+        <p>If you have any questions or need assistance, don't hesitate to reach out to us:</p>
+        <p><strong>FashionFlick</strong></p>
+        <p>Address: 123 Fashion Street, New York, NY 10001</p>
+        <p>Phone: (123) 456-7890</p>
+        <p>Email: support@fashionflick.com</p>
+    </section>
+
+    
+    <div id="cart">
+        <h3>Your Cart</h3>
+        <ul id="cart-items"></ul>
+        <p id="total">Total: $0.00</p>
+    </div>
+
+    
+    <footer>
+        <p>&copy; 2025 FashionFlick</p>
+    </footer>
+
+    <script>
+    let cart = [];
+    let total = 0;
+
+    function addToCart(productName, price, size) {
+        cart.push({ name: productName, price: price, size: size });
+        total += price;
+        updateCartDisplay();
+    }
+
+    function updateCartDisplay() {
+        const cartItemsList = document.getElementById("cart-items");
+        const totalElement = document.getElementById("total");
+
+        cartItemsList.innerHTML = "";
+
+        cart.forEach((item) => {
+            const listItem = document.createElement("li");
+            listItem.textContent = `${item.name} (Size: ${item.size}) - $${item.price.toFixed(2)}`;
+            cartItemsList.appendChild(listItem);
+        });
+
+        totalElement.textContent = `Total: $${total.toFixed(2)}`;
+    }
+
+    function showPaymentPage() {
+        document.querySelector(".payment-page").style.display = "block";
+        document.querySelector(".overlay").style.display = "block";
+    }
+
+    function hidePaymentPage() {
+        document.querySelector(".payment-page").style.display = "none";
+        document.querySelector(".overlay").style.display = "none";
+    }
+
+    function processPayment() {
+        const cardNumber = document.getElementById("card-number").value;
+        const expiryDate = document.getElementById("expiry-date").value;
+        const cvv = document.getElementById("cvv").value;
+
+        if (cardNumber && expiryDate && cvv) {
+            alert("Payment Successful!");
+            cart = [];
+            total = 0;
+            updateCartDisplay();
+            hidePaymentPage();
+        } else {
+            alert("Please fill in all payment details.");
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const checkoutButton = document.createElement("button");
+        checkoutButton.textContent = "Checkout";
+        checkoutButton.onclick = showPaymentPage;
+        document.getElementById("cart").appendChild(checkoutButton);
+
+        const paymentPage = document.createElement("div");
+        paymentPage.classList.add("payment-page");
+        paymentPage.innerHTML = `
+            <h2>Payment Details</h2>
+            <input type="text" id="card-number" placeholder="Card Number">
+            <input type="text" id="expiry-date" placeholder="Expiry Date (MM/YY)">
+            <input type="number" id="cvv" placeholder="CVV">
+            <button onclick="processPayment()">Pay Now</button>
+            <button onclick="hidePaymentPage()">Cancel</button>
+        `;
+        document.body.appendChild(paymentPage);
+
+        const overlay = document.createElement("div");
+        overlay.classList.add("overlay");
+        document.body.appendChild(overlay);
+    });
+    </script>
+
+</body>
+</html>

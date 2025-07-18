@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Conferencing app</title>
+    <style>body {
+    font-family: Arial,  sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+    .container {
+        display: flex;
+         justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    }
+    .video-call-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    max-width: 1200px;
+    margin-bottom: 20px;
+}
+   .video-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    width: 100%;
+    max-width: 1200px;
+    margin-bottom: 20px;
+   }
+   .controls {
+    display: flex;
+        gap: 10px; }
+
+    button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.whiteboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.whiteboard-container {
+    width: 600px;
+    height: 400px;
+    border: 1px solid #ccc;
+    background-color: white;
+}</style>
+
+</head>
+<body>
+    <div class="container">
+        <div class="video-call-container">
+            <div id="video-grid" class="video-grid"></div>
+            <div class="controls">
+                <button id="muteBtn">Mute</button>
+                <button id="cameraBtn"> Turn off Camera</button>
+                <button id="shareScreenBtn">Share Screen</button>
+                <button id="fileUploadBtn">Upload File</button>
+            </div>
+        </div>
+        <div class="whiteboard">
+             <button id="startWhiteboardBtn">Start Whiteboard</button>
+             <div id="Whiteboard" class="Whiteboard-Container">
+
+             </div>
+        </div>
+    </div>
+  <script>
+   
+const muteBtn = document.getElementById('muteBtn');
+const cameraBtn = document.getElementById('cameraBtn');
+const shareScreenBtn = document.getElementById('shareScreenBtn');
+const startWhiteboardBtn = document.getElementById('startWhiteboardBtn');
+const videoGrid = document.getElementById('video-grid');
+
+
+let localStream;
+let whiteboardActive = false;
+let whiteboardCanvas;
+let whiteboardCtx;
+let drawing = false;
+
+
+async function startVideoCall() {
+    try {
+        
+        localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        displayLocalVideo(localStream);
+    } catch (err) {
+        console.error('Error accessing camera and microphone:', err);
+    }
+}
+
+
+function displayLocalVideo(stream) {
+    const videoElement = document.createElement('video');
+    videoElement.srcObject = stream;
+    videoElement.autoplay = true;
+    videoElement.muted = true; // Mute local video
+    videoElement.classList.add('video');
+    videoGrid.appendChild(videoElement);
+}
+
+
+muteBtn.addEventListener('click', () => {
+    const audioTracks = localStream.getAudioTracks();
+    audioTracks[0].enabled = !audioTracks[0].enabled; 
+    muteBtn.textContent = audioTracks[0].enabled ? 'Mute' : 'Unmute';
+});
+
+
+cameraBtn.addEventListener('click', () => {
+    const videoTracks = localStream.getVideoTracks();
+    videoTracks[0].enabled = !videoTracks[0].enabled; 
+    cameraBtn.textContent = videoTracks[0].enabled ? 'Turn off Camera' : 'Turn on Camera';
+});
+
+
+shareScreenBtn.addEventListener('click', async () => {
+    try {
+        const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+        displayLocalVideo(screenStream); 
+    } catch (err) {
+        console.error('Error sharing screen:', err);
+    }
+});
+
+
+startWhiteboardBtn.addEventListener('click', () => {
+    whiteboardActive = !whiteboardActive;
+    if (whiteboardActive) {
+        startWhiteboard();
+    } else {
+        stopWhiteboard();
+    }
+});
+
+
+function startWhiteboard() {
+    whiteboardCanvas = document.createElement('canvas');
+    whiteboardCanvas.width = 600;
+    whiteboardCanvas.height = 400;
+    whiteboardCtx = whiteboardCanvas.getContext('2d');
+    document.getElementById('Whiteboard').appendChild(whiteboardCanvas);
+
+  
+    whiteboardCanvas.addEventListener('mousedown', startDrawing);
+    whiteboardCanvas.addEventListener('mousemove', draw);
+    whiteboardCanvas.addEventListener('mouseup', stopDrawing);
+    whiteboardCanvas.addEventListener('mouseout', stopDrawing);
+}
+
+
+function stopWhiteboard() {
+    if (whiteboardCanvas) {
+        whiteboardCanvas.remove();
+    }
+}
+
+
+function startDrawing(event) {
+    drawing = true;
+    draw(event); 
+}
+
+
+function stopDrawing() {
+    drawing = false;
+}
+
+
+function draw(event) {
+    if (!drawing) return;
+
+    const x = event.offsetX;
+    const y = event.offsetY;
+
+    whiteboardCtx.beginPath();
+    whiteboardCtx.arc(x, y, 5, 0, Math.PI * 2);
+    whiteboardCtx.fillStyle = 'black';
+    whiteboardCtx.fill();
+}
+
+
+startVideoCall();
+
+  </script>
+
+</body>
+</html>
